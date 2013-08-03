@@ -14,9 +14,9 @@ Google Maps Geocoding API has a limitation that prohibits querying their geocodi
 
 ## Install
 
-go get "github.com/jasonwinn/geocoder"
-
-import "github.com/jasonwinn/geocoder"
+* go get "github.com/jasonwinn/geocoder"
+* import "github.com/jasonwinn/geocoder"
+ 
 
 ## Examples
 
@@ -39,11 +39,15 @@ import "github.com/jasonwinn/geocoder"
   address.State 	        // WA
   address.PostalCode 	    // 98104 
   address.County 	        // King
-  address.CountryCode 	  // US 
+  address.CountryCode       // US 
 
 ```
 
+## Contribute
 
 This is my first experience with Google Go. If you notice anything that could be improved or is not a best practice, please let me know.
+
+## TODO
+Make ApiKey easily configurable. 
 
 
