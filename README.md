@@ -35,12 +35,12 @@ import "github.com/jasonwinn/geocoder"
 ```
   address := geocoder.ReverseGeocode(47.6064, -122.330803)
 
-  address.Street 	// 542 Marion St   
-  address.City 		// Seattle
-  address.State 	// WA
-  address.PostalCode 	// 98104 
-  address.County 	// King
-  address.CountryCode 	// US 
+  address.Street 	        // 542 Marion St   
+  address.City 		        // Seattle
+  address.State 	        // WA
+  address.PostalCode 	    // 98104 
+  address.County 	        // King
+  address.CountryCode 	  // US 
 
 ```
 
