@@ -15,9 +15,8 @@ Google Maps Geocoding API has a limitation that prohibits querying their geocodi
 ## Install
 
 go get "github.com/jasonwinn/geocoder"
+
 import "github.com/jasonwinn/geocoder"
-
-
 
 ## Examples
 
