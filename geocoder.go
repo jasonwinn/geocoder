@@ -57,7 +57,7 @@ func Geocode(query string) (lat float64, lng float64) {
 }
 
 func ReverseGeocode(lat float64, lng float64) *GeoAddress {
-    // Query Provider
+	// Query Provider
 	resp, err := http.Get(reverseGeocodeUrl + fmt.Sprintf("%f", lat) + "," + fmt.Sprintf("%f", lng))
 
 	if err != nil {
@@ -67,13 +67,13 @@ func ReverseGeocode(lat float64, lng float64) *GeoAddress {
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 
-    // Decode our JSON results
+	// Decode our JSON results
 	result := new(ReverseProviderResult)
 	json.Unmarshal(body, &result)
 
 	address := &GeoAddress{}
 
-    // Assign the results to the GeoAddress struct
+	// Assign the results to the GeoAddress struct
 	if len(result.Results[0].Locations) > 0 {
 		l := result.Results[0].Locations[0]
 		address.Street = l.Street
@@ -83,7 +83,6 @@ func ReverseGeocode(lat float64, lng float64) *GeoAddress {
 		address.County = l.County
 		address.CountryCode = l.CountryCode
 	}
-
 
 	return address
 }
