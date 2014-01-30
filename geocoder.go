@@ -3,7 +3,6 @@ package geocoder
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 )
@@ -24,15 +23,6 @@ const (
 		"&location="
 )
 
-type GeoAddress struct {
-	Street      string
-	City        string
-	State       string
-	PostalCode  string
-	County      string
-	CountryCode string
-}
-
 func Geocode(query string) (lat float64, lng float64) {
 	// Query Provider
 	resp, err := http.Get(geocodeUrl + url.QueryEscape(query))
@@ -42,11 +32,15 @@ func Geocode(query string) (lat float64, lng float64) {
 	}
 
 	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
 
 	// Decode our JSON results
 	result := new(ProviderResult)
-	json.Unmarshal(body, &result)
+	decoder := json.NewDecoder(resp.Body)
+	err = decoder.Decode(&result)
+
+	if err != nil {
+		panic(err)
+	}
 
 	if len(result.Results[0].Locations) > 0 {
 		lat = result.Results[0].Locations[0].LatLng.Lat
@@ -65,24 +59,22 @@ func ReverseGeocode(lat float64, lng float64) *GeoAddress {
 	}
 
 	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
 
 	// Decode our JSON results
 	result := new(ReverseProviderResult)
-	json.Unmarshal(body, &result)
+	decoder := json.NewDecoder(resp.Body)
+	err = decoder.Decode(&result)
 
-	address := &GeoAddress{}
+	if err != nil {
+		panic(err)
+	}
+
+	var address GeoAddress
 
 	// Assign the results to the GeoAddress struct
 	if len(result.Results[0].Locations) > 0 {
-		l := result.Results[0].Locations[0]
-		address.Street = l.Street
-		address.City = l.City
-		address.State = l.State
-		address.PostalCode = l.PostalCode
-		address.County = l.County
-		address.CountryCode = l.CountryCode
+		address = result.Results[0].Locations[0]
 	}
 
-	return address
+	return &address
 }
