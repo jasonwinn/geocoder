@@ -9,8 +9,8 @@ const (
 	city       = "Seattle"
 	state      = "WA"
 	postalCode = "98104"
-	seattleLat = 47.6064
-	seattleLng = -122.330803
+	seattleLat = 47.603561
+	seattleLng = -122.329437
 )
 
 func TestGeocode(t *testing.T) {
