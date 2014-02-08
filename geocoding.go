@@ -12,7 +12,6 @@ address := ReverseGeocode(47.603561, -122.329437)
 package geocoder
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -42,8 +41,7 @@ func Geocode(query string) (lat float64, lng float64) {
 
 	// Decode our JSON results
 	result := new(GeocodingResults)
-	decoder := json.NewDecoder(resp.Body)
-	err = decoder.Decode(&result)
+	err = decoder(resp).Decode(&result)
 
 	if err != nil {
 		panic(err)
@@ -69,8 +67,7 @@ func ReverseGeocode(lat float64, lng float64) *Location {
 
 	// Decode our JSON results
 	result := new(GeocodingResults)
-	decoder := json.NewDecoder(resp.Body)
-	err = decoder.Decode(&result)
+	err = decoder(resp).Decode(&result)
 
 	if err != nil {
 		panic(err)
