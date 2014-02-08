@@ -19,19 +19,20 @@ import (
 
 const (
 	format     = "json"
-	geocodeUrl = "http://www.mapquestapi.com/geocoding/v1/address" +
+	geocodeURL = "http://www.mapquestapi.com/geocoding/v1/address" +
 		"?key=" + apiKey +
 		"&inFormat=kvp" +
 		"&outFormat=" + format +
 		"&location="
-	reverseGeocodeUrl = "http://www.mapquestapi.com/geocoding/v1/reverse" +
+	reverseGeocodeURL = "http://www.mapquestapi.com/geocoding/v1/reverse" +
 		"?key=" + apiKey +
 		"&location="
 )
 
+// Geocode returns the latitude and longitude for a certain address
 func Geocode(query string) (lat float64, lng float64) {
 	// Query Provider
-	resp, err := http.Get(geocodeUrl + url.QueryEscape(query))
+	resp, err := http.Get(geocodeURL + url.QueryEscape(query))
 
 	if err != nil {
 		panic(err)
@@ -55,9 +56,10 @@ func Geocode(query string) (lat float64, lng float64) {
 	return
 }
 
+// ReverseGeocode returns the address for a certain latitude and longitude
 func ReverseGeocode(lat float64, lng float64) *Location {
 	// Query Provider
-	resp, err := http.Get(reverseGeocodeUrl + fmt.Sprintf("%f", lat) + "," + fmt.Sprintf("%f", lng))
+	resp, err := http.Get(reverseGeocodeURL + fmt.Sprintf("%f", lat) + "," + fmt.Sprintf("%f", lng))
 
 	if err != nil {
 		panic(err)

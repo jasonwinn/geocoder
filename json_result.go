@@ -3,11 +3,13 @@
 
 package geocoder
 
+// LatLng specifies a point with latitude and longitude
 type LatLng struct {
 	Lat float64 `json:"lat"`
 	Lng float64 `json:"lng"`
 }
 
+// Location is specified by its address and coordinates
 type Location struct {
 	Street      string `json:"street"`
 	City        string `json:"adminArea5"`
@@ -20,6 +22,7 @@ type Location struct {
 	DragPoint   bool   `json:"dragPoint"`
 }
 
+// GeocodingResults contains the locations of a geocoding request
 type GeocodingResults struct {
 	Results []struct {
 		Locations []Location `json:"locations"`
