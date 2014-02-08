@@ -1,3 +1,14 @@
+/* Exposes (partially) the mapquest geocoding api.
+
+Reference: http://open.mapquestapi.com/geocoding/
+
+Example:
+
+lat, lng := Geocode("Seattle WA")
+address := ReverseGeocode(47.603561, -122.329437)
+
+*/
+
 package geocoder
 
 import (
@@ -34,7 +45,7 @@ func Geocode(query string) (lat float64, lng float64) {
 	defer resp.Body.Close()
 
 	// Decode our JSON results
-	result := new(ProviderResult)
+	result := new(GeocodingResults)
 	decoder := json.NewDecoder(resp.Body)
 	err = decoder.Decode(&result)
 
@@ -50,7 +61,7 @@ func Geocode(query string) (lat float64, lng float64) {
 	return
 }
 
-func ReverseGeocode(lat float64, lng float64) *GeoAddress {
+func ReverseGeocode(lat float64, lng float64) *Location {
 	// Query Provider
 	resp, err := http.Get(reverseGeocodeUrl + fmt.Sprintf("%f", lat) + "," + fmt.Sprintf("%f", lng))
 
@@ -61,7 +72,7 @@ func ReverseGeocode(lat float64, lng float64) *GeoAddress {
 	defer resp.Body.Close()
 
 	// Decode our JSON results
-	result := new(ReverseProviderResult)
+	result := new(GeocodingResults)
 	decoder := json.NewDecoder(resp.Body)
 	err = decoder.Decode(&result)
 
@@ -69,12 +80,12 @@ func ReverseGeocode(lat float64, lng float64) *GeoAddress {
 		panic(err)
 	}
 
-	var address GeoAddress
+	var location Location
 
-	// Assign the results to the GeoAddress struct
+	// Assign the results to the Location struct
 	if len(result.Results[0].Locations) > 0 {
-		address = result.Results[0].Locations[0]
+		location = result.Results[0].Locations[0]
 	}
 
-	return &address
+	return &location
 }
