@@ -179,10 +179,10 @@ func (directions Directions) Distance(unit string) (distance float64, err error)
 	directions.NarrativeType = "none"
 	directions.Unit = unit
 	resp, err := http.Get(directions.URL("json"))
-	defer resp.Body.Close()
 	if err != nil {
 		return
 	}
+	defer resp.Body.Close()
 	// Decode our JSON results
 	results := distanceResults{}
 	err = decoder(resp).Decode(&results)
@@ -203,10 +203,10 @@ type distanceResults struct {
 // Get the Direction Results (Route & Info)
 func (directions Directions) Get() (results *DirectionsResults, err error) {
 	resp, err := http.Get(directions.URL("json"))
-	defer resp.Body.Close()
 	if err != nil {
 		return
 	}
+	defer resp.Body.Close()
 	// Decode our JSON results
 	results = &DirectionsResults{}
 	err = decoder(resp).Decode(results)
