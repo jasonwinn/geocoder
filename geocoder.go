@@ -20,3 +20,22 @@ func SetAPIKey(key string) {
 func decoder(resp *http.Response) *json.Decoder {
 	return json.NewDecoder(resp.Body)
 }
+
+// LatLng specifies a point with latitude and longitude
+type LatLng struct {
+	Lat float64 `json:"lat"`
+	Lng float64 `json:"lng"`
+}
+
+// Location is specified by its address and coordinates
+type Location struct {
+	Street      string `json:"street"`
+	City        string `json:"adminArea5"`
+	State       string `json:"adminArea3"`
+	PostalCode  string `json:"postalCode"`
+	County      string `json:"adminArea4"`
+	CountryCode string `json:"adminArea1"`
+	LatLng      LatLng `json:"latLng"`
+	Type        string `json:"type"`
+	DragPoint   bool   `json:"dragPoint"`
+}
