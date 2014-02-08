@@ -14,7 +14,7 @@ const (
 	testStatuscode = 0
 	testTime       = 6085
 	testUnit       = "m"
-	testURL        = "http://open.mapquestapi.com/directions/v2/route?key=Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur&inFormat=kvp&outFormat=json&from=Amsterdam%2CNetherlands&to=Antwerp%2CBelgium&unit=m&routeTypefastest&narrativeType=text&enhancedNarrative=false&maxLinkId=0&locale=en_US&mustAvoidLinkIds=5,7&stateBoundaryDisplay=true&countryBoundaryDisplay=true&destinationManeuverDisplay=true&fullShape=false&cyclingRoadFactor=1&roadGradeStrategy=DEFAULT_STRATEGY&drivingStyle=normal&highwayEfficiency=22&manMaps=true&walkingSpeed=-1"
+	testURL        = "http://open.mapquestapi.com/directions/v2/route?inFormat=kvp&key=Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur&outFormat=json&from=Amsterdam%2CNetherlands&to=Antwerp%2CBelgium&unit=m&routeTypefastest&narrativeType=text&enhancedNarrative=false&maxLinkId=0&locale=en_US&mustAvoidLinkIds=5,7&stateBoundaryDisplay=true&countryBoundaryDisplay=true&destinationManeuverDisplay=true&fullShape=false&cyclingRoadFactor=1&roadGradeStrategy=DEFAULT_STRATEGY&drivingStyle=normal&highwayEfficiency=22&manMaps=true&walkingSpeed=-1"
 )
 
 func unexpected(err error, t *testing.T) bool {

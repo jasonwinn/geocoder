@@ -26,8 +26,7 @@ import (
 )
 
 const (
-	directionURL = "http://open.mapquestapi.com/directions/v2/route" +
-		"?key=" + apiKey + "&inFormat=kvp"
+	directionURL = "http://open.mapquestapi.com/directions/v2/route?inFormat=kvp&key="
 )
 
 // Directions provide information on how to get from one location
@@ -129,6 +128,7 @@ func (directions Directions) URL(format string) string {
 		}
 	}
 	routeURL.WriteString(directionURL)
+	routeURL.WriteString(apiKey)
 	routeURL.WriteString("&outFormat=" + format)
 	routeURL.WriteString("&from=" + url.QueryEscape(directions.From))
 	for _, to := range directions.To {
