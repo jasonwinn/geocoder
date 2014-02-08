@@ -1,7 +1,6 @@
 package geocoder
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -18,7 +17,7 @@ func TestGeocode(t *testing.T) {
 	lat, lng := Geocode(query)
 
 	if lat != seattleLat || lng != seattleLng {
-		t.Error(fmt.Sprintf("Expected %f, %f ~ Received %f, %f", seattleLat, seattleLng, lat, lng))
+		t.Errorf("Expected %f, %f ~ Received %f, %f", seattleLat, seattleLng, lat, lng)
 	}
 }
 
@@ -26,7 +25,7 @@ func TestReverseGeoCode(t *testing.T) {
 	address := ReverseGeocode(seattleLat, seattleLng)
 
 	if address.City != city || address.State != state || address.PostalCode != postalCode {
-		t.Error(fmt.Sprintf("Expected %s %s %s ~ Received %s %s %s",
-			city, state, postalCode, address.City, address.State, address.PostalCode))
+		t.Errorf("Expected %s %s %s ~ Received %s %s %s",
+			city, state, postalCode, address.City, address.State, address.PostalCode)
 	}
 }
