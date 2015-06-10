@@ -7,13 +7,13 @@ import (
 const (
 	city       = "Seattle"
 	state      = "WA"
-	postalCode = "98104"
-	seattleLat = 47.603561
-	seattleLng = -122.329437
-	antwerpLat = 51.221202
-	antwerpLng = 4.399632
-	beijingLat = 40.250538
-	beijingLng = 116.625089
+	postalCode = "98164"
+	seattleLat = 47.603832
+	seattleLng = -122.330062
+	antwerpLat = 51.221110
+	antwerpLng = 4.399708
+	beijingLat = 39.905909
+	beijingLng = 116.391349
 )
 
 func TestGeocode(t *testing.T) {
@@ -21,7 +21,7 @@ func TestGeocode(t *testing.T) {
 	lat, lng := Geocode(query)
 
 	if lat != seattleLat || lng != seattleLng {
-		t.Errorf("Expected %f, %f ~ Received %f, %f", seattleLat, seattleLng, lat, lng)
+		t.Errorf("Seattle: Expected %f, %f ~ Received %f, %f", seattleLat, seattleLng, lat, lng)
 	}
 }
 
@@ -29,7 +29,7 @@ func TestReverseGeoCode(t *testing.T) {
 	address := ReverseGeocode(seattleLat, seattleLng)
 
 	if address.City != city || address.State != state || address.PostalCode != postalCode {
-		t.Errorf("Expected %s %s %s ~ Received %s %s %s",
+		t.Errorf("Seattle (reverse): Expected %s %s %s ~ Received %s %s %s",
 			city, state, postalCode, address.City, address.State, address.PostalCode)
 	}
 }

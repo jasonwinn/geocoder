@@ -20,8 +20,8 @@ import (
 )
 
 const (
-	geocodeURL        = "http://www.mapquestapi.com/geocoding/v1/address?inFormat=kvp&outFormat=json&location="
-	reverseGeocodeURL = "http://www.mapquestapi.com/geocoding/v1/reverse?location="
+	geocodeURL        = "http://open.mapquestapi.com/geocoding/v1/address?inFormat=kvp&outFormat=json&location="
+	reverseGeocodeURL = "http://open.mapquestapi.com/geocoding/v1/reverse?location="
 	batchGeocodeURL   = "http://open.mapquestapi.com/geocoding/v1/batch?key="
 )
 
