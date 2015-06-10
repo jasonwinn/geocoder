@@ -1,16 +1,17 @@
-Geocoder for Google Go
-=====================
+Mapquest geocoder and directions for Go (golang)
+================================================
 
 ## What does it do
 
 * Returns a Longitude and Latitude for a given string query
 * Returns an address for a Longitude and Longitude
+* Returns directions between two or more points. (JSON or XML)
 
 ## API Key
 Get a free API Key at [http://mapquestapi.com](http://mapquestapi.com)
 
 ## Why MapQuest API?
-Google Maps Geocoding API has a limitation that prohibits querying their geocoding API unless you will be displaying the results on a Google Map.
+Google Maps Geocoding API has a limitation that prohibits querying their geocoding API unless you will be displaying the results on a Google Map. Google directions is limited to 2 requests per second.
 
 ## Install
 
@@ -29,7 +30,6 @@ Google Maps Geocoding API has a limitation that prohibits querying their geocodi
  
 ```
 
-
 ### Reverse Geocode
 ```
   address := geocoder.ReverseGeocode(47.6064, -122.330803)
@@ -43,11 +43,19 @@ Google Maps Geocoding API has a limitation that prohibits querying their geocodi
 
 ```
 
-## Contribute
+### Directions
+```
+  directions := NewDirections("Amsterdam,Netherlands", []string{"Antwerp,Belgium"})
+  results, err := directions.Get()
+  route := results.Route
+  time:= route.Time
+  legs:= route.Legs
+  distance:= route.Distance
+  // or get distance with this shortcut
+  distance, err := directions.Distance("k")
+```
 
-This is my first experience with Google Go. If you notice anything that could be improved or is not a best practice, please let me know.
+## Documentation
 
-## TODO
-Make ApiKey easily configurable. 
-
+[https://godoc.org/github.com/jasonwinn/geocoder](https://godoc.org/github.com/jasonwinn/geocoder)
 
