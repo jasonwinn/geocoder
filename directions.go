@@ -19,10 +19,12 @@ package geocoder
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -184,9 +186,13 @@ func (directions Directions) Distance(unit string) (distance float64, err error)
 	}
 	defer resp.Body.Close()
 	// Decode our JSON results
-	results := distanceResults{}
+	results := DistanceResults{}
 	err = decoder(resp).Decode(&results)
 	if err != nil {
+		return
+	}
+	if results.Info.Statuscode != 0 {
+		err = results.Info
 		return
 	}
 	distance = results.Route.Distance
@@ -194,10 +200,11 @@ func (directions Directions) Distance(unit string) (distance float64, err error)
 }
 
 // Private json struct to retrieve the distance
-type distanceResults struct {
+type DistanceResults struct {
 	Route struct {
 		Distance float64 `json:"distance"`
 	} `json:"route"`
+	Info Info `json:"info"`
 }
 
 // Get the Direction Results (Route & Info)
@@ -210,6 +217,12 @@ func (directions Directions) Get() (results *DirectionsResults, err error) {
 	// Decode our JSON results
 	results = &DirectionsResults{}
 	err = decoder(resp).Decode(results)
+	if err != nil {
+		return
+	}
+	if results.Info.Statuscode != 0 {
+		err = results.Info
+	}
 	return
 }
 
@@ -226,7 +239,17 @@ type Info struct {
 		ImageURL     string `json:"imageUrl"`     // "http://api.mqcdn.com/res/mqlogo.gif"
 		ImageAltText string `json:"imageAltText"` // "© 2014 MapQuest, Inc."
 	} `json:"copyright"`
-	Statuscode int `json:"statuscode"`
+	Statuscode int      `json:"statuscode"`
+	Messages   []string `json:"messages"`
+}
+
+func (err Info) Error() string {
+	if err.Statuscode != 0 {
+		return fmt.Sprintf(
+			"Error %d: %s",
+			err.Statuscode, strings.Join(err.Messages, "; "))
+	}
+	return "No error"
 }
 
 // Route provides information on how to get from one location

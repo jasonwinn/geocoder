@@ -2,6 +2,7 @@ package geocoder
 
 import (
 	"fmt"
+	"math"
 	"strings"
 	"testing"
 )
@@ -49,6 +50,14 @@ func TestDistance(t *testing.T) {
 	}
 }
 
+func TestDistanceError(t *testing.T) {
+	directions := NewDirections("Amsterdam,Netherlands", []string{"sdfa"})
+	_, err := directions.Distance("k")
+	if err.Error() != "Error 500: Locations returned no results" {
+		t.Errorf("Expected %s ~ Received %s", "", err.Error())
+	}
+}
+
 func TestDirections(t *testing.T) {
 	directions := NewDirections("Amsterdam,Netherlands", []string{"Antwerp,Belgium"})
 	directions.Unit = "k" // switch to km
@@ -72,7 +81,7 @@ func TestDirections(t *testing.T) {
 	if testDistance != distance {
 		t.Errorf("Route.Distance: Expected %d ~ Received %d", testDistance, distance)
 	}
-	if testTime != route.Time {
+	if math.Abs(float64(testTime-route.Time)) > 60.0 { // tolerate minute difference
 		t.Errorf("Route.Time: Expected %d ~ Received %d", testTime, route.Time)
 	}
 	legs := route.Legs
