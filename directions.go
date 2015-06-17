@@ -28,7 +28,7 @@ import (
 )
 
 const (
-	directionURL = "http://open.mapquestapi.com/directions/v2/route?inFormat=kvp&key="
+	directionURL = "https://open.mapquestapi.com/directions/v2/route?inFormat=kvp&key="
 )
 
 // Directions provide information on how to get from one location
