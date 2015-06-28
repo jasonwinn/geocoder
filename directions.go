@@ -199,7 +199,7 @@ func (directions Directions) Distance(unit string) (distance float64, err error)
 	return
 }
 
-// Private json struct to retrieve the distance
+// DistanceResults json struct to retrieve only the distance
 type DistanceResults struct {
 	Route struct {
 		Distance float64 `json:"distance"`
