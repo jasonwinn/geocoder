@@ -32,7 +32,10 @@ SetAPIKey("Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur")
 ### Geocode
 ```go
   query := "Seattle WA"
-  lat, lng := geocoder.Geocode(query)
+  lat, lng, err := geocoder.Geocode(query)
+  if err != nil {
+    panic("THERE WAS SOME ERROR!!!!!")
+  }
   
   // 47.6064, -122.330803
  
@@ -40,7 +43,10 @@ SetAPIKey("Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur")
 
 ### Reverse Geocode
 ```go
-  address := geocoder.ReverseGeocode(47.6064, -122.330803)
+  address, err := geocoder.ReverseGeocode(47.6064, -122.330803)
+  if err != nil {
+    panic("THERE WAS SOME ERROR!!!!!")
+  }
 
   address.Street 	        // 542 Marion St   
   address.City 		        // Seattle
@@ -55,12 +61,23 @@ SetAPIKey("Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur")
 ```go
   directions := NewDirections("Amsterdam,Netherlands", []string{"Antwerp,Belgium"})
   results, err := directions.Get()
+  if err != nil {
+    panic("THERE WAS SOME ERROR!!!!!")
+  }
+
   route := results.Route
   time:= route.Time
   legs:= route.Legs
   distance:= route.Distance
+
   // or get distance with this shortcut
+  //
+  // use "k" to return result in km
+  // use "m" to return result in miles
   distance, err := directions.Distance("k")
+  if err != nil {
+    panic("THERE WAS SOME ERROR!!!!!")
+  }
 ```
 
 ## Documentation
