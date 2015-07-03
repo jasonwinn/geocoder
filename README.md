@@ -24,13 +24,13 @@ Google Maps Geocoding API has a limitation that prohibits querying their geocodi
 ### Set API Key
 
 You'll want to set an api key for the Mapquest API to go into production.
-```golang
+```go
 // this is the testing key used in `go test`
 SetAPIKey("Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur")
 ```
 
 ### Geocode
-```golang
+```go
   query := "Seattle WA"
   lat, lng := geocoder.Geocode(query)
   
@@ -39,7 +39,7 @@ SetAPIKey("Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur")
 ```
 
 ### Reverse Geocode
-```golang
+```go
   address := geocoder.ReverseGeocode(47.6064, -122.330803)
 
   address.Street 	        // 542 Marion St   
@@ -52,7 +52,7 @@ SetAPIKey("Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur")
 ```
 
 ### Directions
-```golang
+```go
   directions := NewDirections("Amsterdam,Netherlands", []string{"Antwerp,Belgium"})
   results, err := directions.Get()
   route := results.Route
