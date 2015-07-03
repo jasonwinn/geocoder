@@ -26,12 +26,12 @@ const (
 )
 
 // Geocode returns the latitude and longitude for a certain address
-func Geocode(address string) (lat float64, lng float64) {
+func Geocode(address string) (float64, float64, error) {
 	// Query Provider
 	resp, err := http.Get(geocodeURL + url.QueryEscape(address) + "&key=" + apiKey)
 
 	if err != nil {
-		panic(err)
+		return 0, 0, fmt.Errorf("Error geocoding address: <%v>", err)
 	}
 
 	defer resp.Body.Close()
@@ -41,25 +41,27 @@ func Geocode(address string) (lat float64, lng float64) {
 	err = decoder(resp).Decode(&result)
 
 	if err != nil {
-		panic(err)
+		return 0, 0, fmt.Errorf("Error decoding geocoding result: <%v>", err)
 	}
 
+	var lat float64
+	var lng float64
 	if len(result.Results[0].Locations) > 0 {
 		lat = result.Results[0].Locations[0].LatLng.Lat
 		lng = result.Results[0].Locations[0].LatLng.Lng
 	}
 
-	return
+	return lat, lng, nil
 }
 
 // ReverseGeocode returns the address for a certain latitude and longitude
-func ReverseGeocode(lat float64, lng float64) *Location {
+func ReverseGeocode(lat float64, lng float64) (*Location, error) {
 	// Query Provider
 	resp, err := http.Get(reverseGeocodeURL +
 		fmt.Sprintf("%f,%f&key=%s", lat, lng, apiKey))
 
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("Error reverse geocoding lat, long pair: <%v>", err)
 	}
 
 	defer resp.Body.Close()
@@ -69,7 +71,7 @@ func ReverseGeocode(lat float64, lng float64) *Location {
 	err = decoder(resp).Decode(&result)
 
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("Error decoding reverse geocoding result: <%v>", err)
 	}
 
 	var location Location
@@ -79,16 +81,16 @@ func ReverseGeocode(lat float64, lng float64) *Location {
 		location = result.Results[0].Locations[0]
 	}
 
-	return &location
+	return &location, nil
 }
 
 // BatchGeocode allows multiple locations to be geocoded at the same time.
 // A limit of 100 locations exists for one call. Therefore the json is
 // embedded as the body of an http post.
-func BatchGeocode(addresses []string) (latLngs []LatLng) {
+func BatchGeocode(addresses []string) ([]LatLng, error) {
 	var next, start, end int
 	n := len(addresses)
-	latLngs = make([]LatLng, n)
+	latLngs := make([]LatLng, n)
 	batches := n/100 + 1
 	next = 0
 	for batch := 0; batch < batches; batch++ {
@@ -106,18 +108,18 @@ func BatchGeocode(addresses []string) (latLngs []LatLng) {
 		}
 		b, err := json.Marshal(bgb)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		body := bytes.NewBuffer(b)
 		resp, err := http.Post(batchGeocodeURL+apiKey, "application/json", body)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		defer resp.Body.Close()
 		var result geocodingResults
 		err = decoder(resp).Decode(&result)
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
 		for i, r := range result.Results {
 			if len(r.Locations) == 0 {
@@ -127,7 +129,7 @@ func BatchGeocode(addresses []string) (latLngs []LatLng) {
 			}
 		}
 	}
-	return
+	return latLngs, nil
 }
 
 // geocodingResults contains the locations of a geocoding request
