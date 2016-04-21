@@ -66,8 +66,8 @@ SetAPIKey("Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur")
   }
 
   route := results.Route
-  time:= route.Time
-  legs:= route.Legs
+  time := route.Time
+  legs := route.Legs
   distance:= route.Distance
 
   // or get distance with this shortcut
