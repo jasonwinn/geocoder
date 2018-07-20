@@ -5,7 +5,7 @@ Reference: http://open.mapquestapi.com/geocoding/
 Example:
 
 lat, lng := Geocode("Seattle WA")
-address := ReverseGeocode(47.603561, -122.329437)
+location, err := ReverseGeocode(47.603561, -122.329437)
 
 */
 
@@ -52,6 +52,29 @@ func Geocode(address string) (float64, float64, error) {
 	}
 
 	return lat, lng, nil
+}
+
+// FullGeocode returns the full geocoding response including reverse-geocoded
+// location
+func FullGeocode(address string) (*GeocodingResult, error) {
+	// Query Provider
+	resp, err := http.Get(geocodeURL + url.QueryEscape(address) + "&key=" + apiKey)
+
+	if err != nil {
+		return nil, fmt.Errorf("Error geocoding address: <%v>", err)
+	}
+
+	defer resp.Body.Close()
+
+	// Decode our JSON results
+	var result GeocodingResult
+	err = decoder(resp).Decode(&result)
+
+	if err != nil {
+		return nil, fmt.Errorf("Error decoding geocoding result: <%v>", err)
+	}
+
+	return &result, nil
 }
 
 // ReverseGeocode returns the address for a certain latitude and longitude
