@@ -40,6 +40,7 @@ type Location struct {
 	DragPoint   bool   `json:"dragPoint"`
 }
 
+// Complete geocoding result
 type GeocodingResult struct {
 	Info struct {
 		StatusCode int `json:"statuscode"`
@@ -59,28 +60,34 @@ type GeocodingResult struct {
 			Location string `json:"location"`
 		} `json:"providedLocation"`
 		Locations []struct {
-			Street             string `json:"street"`
-			AdminArea6         string `json:"adminArea6"`
-			AdminArea6Type     string `json:"adminArea6Type"`
-			AdminArea5         string `json:"adminArea5"`
-			AdminArea5Type     string `json:"adminArea5Type"`
-			AdminArea4         string `json:"adminArea4"`
-			AdminArea4Type     string `json:"adminArea4Type"`
-			AdminArea3         string `json:"adminArea3"`
-			AdminArea3Type     string `json:"adminArea3Type"`
+			Street string `json:"street"`
+			// Neighborhood
+			AdminArea6     string `json:"adminArea6"`
+			AdminArea6Type string `json:"adminArea6Type"`
+			// City
+			AdminArea5     string `json:"adminArea5"`
+			AdminArea5Type string `json:"adminArea5Type"`
+			// County
+			AdminArea4     string `json:"adminArea4"`
+			AdminArea4Type string `json:"adminArea4Type"`
+			// State
+			AdminArea3     string `json:"adminArea3"`
+			AdminArea3Type string `json:"adminArea3Type"`
+			// Country
 			AdminArea1         string `json:"adminArea1"`
 			AdminArea1Type     string `json:"adminArea1Type"`
 			PostalCode         string `json:"postalCode"`
 			GeocodeQualityCode string `json:"geocodeQualityCode"`
-			GeocodeQuality     string `json:"geocodeQuality"`
-			DragPoint          bool   `json:"dragPoint"`
-			SideOfStreet       string `json:"sideOfStreet"`
-			LinkId             string `json:"linkId"`
-			UnknownInput       string `json:"unknownInput"`
-			Type               string `json:"type"`
-			LatLng             LatLng `json:"latLng"`
-			DisplayLatLng      LatLng `json:"displayLatLng"`
-			MapUrl             string `json:"mapUrl"`
+			// ex: "NEIGHBORHOOD", "CITY", "COUNTY"
+			GeocodeQuality string `json:"geocodeQuality"`
+			DragPoint      bool   `json:"dragPoint"`
+			SideOfStreet   string `json:"sideOfStreet"`
+			LinkId         string `json:"linkId"`
+			UnknownInput   string `json:"unknownInput"`
+			Type           string `json:"type"`
+			LatLng         LatLng `json:"latLng"`
+			DisplayLatLng  LatLng `json:"displayLatLng"`
+			MapUrl         string `json:"mapUrl"`
 		} `json:"locations"`
 	} `json:"results"`
 }
