@@ -10,15 +10,15 @@ const (
 	seattleLng = -122.330062
 	antwerpLat = 51.221110
 	antwerpLng = 4.399708
-	beijingLat = 39.905909
-	beijingLng = 116.391349
+	beijingLat = 39.905963
+	beijingLng = 116.391248
 )
 
 func TestGeocode(t *testing.T) {
 	query := "Seattle WA"
 	lat, lng, err := Geocode(query)
 	if err != nil {
-		t.Errorf("Seattle: Expected error to be nil ~ Recieved %v", err)
+		t.Errorf("Seattle: Expected error to be nil ~ Received %v", err)
 	}
 
 	if lat != seattleLat || lng != seattleLng {
@@ -29,7 +29,7 @@ func TestGeocode(t *testing.T) {
 func TestReverseGeoCode(t *testing.T) {
 	address, err := ReverseGeocode(seattleLat, seattleLng)
 	if err != nil {
-		t.Errorf("Seattle (reverse): Expected error to be nil ~ Recieved %v", err)
+		t.Errorf("Seattle (reverse): Expected error to be nil ~ Received %v", err)
 	}
 
 	if address != nil && address.City != city || address.State != state || address.PostalCode != postalCode {
@@ -41,7 +41,7 @@ func TestReverseGeoCode(t *testing.T) {
 func TestBatchGeocode(t *testing.T) {
 	latLngs, err := BatchGeocode([]string{"Antwerp,Belgium", "Beijing,China"})
 	if err != nil {
-		t.Errorf("Seattle (reverse): Expected error to be nil ~ Recieved %v", err)
+		t.Errorf("Seattle (reverse): Expected error to be nil ~ Received %v", err)
 	}
 
 	if len(latLngs) != 2 {
@@ -66,7 +66,7 @@ func TestGeocodeShouldFail(t *testing.T) {
 	SetAPIKey(savedApiKey)
 
 	if err == nil {
-		t.Errorf("Seattle: Expected error to not be nil ~ Recieved %v", err)
+		t.Errorf("Seattle: Expected error to not be nil ~ Received %v", err)
 	}
 
 	if lat != 0 || lng != 0 {
@@ -82,7 +82,7 @@ func TestReverseGeoCodeShouldFail(t *testing.T) {
 	SetAPIKey(savedApiKey)
 
 	if err == nil {
-		t.Errorf("Seattle (reverse): Expected error to not be nil ~ Recieved %v", err)
+		t.Errorf("Seattle (reverse): Expected error to not be nil ~ Received %v", err)
 	}
 
 	if address != nil {
@@ -112,7 +112,7 @@ func TestBatchGeocodeShouldFail(t *testing.T) {
 	SetAPIKey(savedApiKey)
 
 	if err == nil {
-		t.Errorf("Batch: Expected error to be nil ~ Recieved %v", err)
+		t.Errorf("Batch: Expected error to be nil ~ Received %v", err)
 	}
 
 	if len(latLngs) != 0 {
