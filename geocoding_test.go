@@ -91,6 +91,19 @@ func TestReverseGeoCodeShouldFail(t *testing.T) {
 	}
 }
 
+func TestFullGeocode(t *testing.T) {
+	query := "Seattle WA"
+	result, err := FullGeocode(query)
+	if err != nil {
+		t.Errorf("Seattle: Expected error to be nil ~ Received %v", err)
+	}
+
+	location := result.Results[0].Locations[0]
+	if location.LatLng.Lat != seattleLat || location.LatLng.Lng != seattleLng {
+		t.Errorf("Seattle: Expected (%f, %f) ~ Received (%f, %f)", seattleLat, seattleLng, location.LatLng.Lat, location.LatLng.Lng)
+	}
+}
+
 func TestBatchGeocodeShouldFail(t *testing.T) {
 	// set a bad api key
 	savedApiKey := apiKey
