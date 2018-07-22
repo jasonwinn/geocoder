@@ -10,8 +10,8 @@ const (
 	seattleLng = -122.330062
 	antwerpLat = 51.221110
 	antwerpLng = 4.399708
-	beijingLat = 39.905909
-	beijingLng = 116.391349
+	beijingLat = 39.905963
+	beijingLng = 116.391248
 )
 
 func TestGeocode(t *testing.T) {

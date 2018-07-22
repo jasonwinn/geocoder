@@ -8,10 +8,10 @@ import (
 )
 
 const (
-	templDump      = "{\"route\":{\"hasTollRoad\":false,\"computedWaypoints\":[],\"fuelUsed\":0,\"shape\":{\"maneuverIndexes\":[],\"shapePoints\":[51.532039,-0.177344],\"legIndexes\":[]},\"hasUnpaved\":false,\"hasHighway\":false,\"realTime\":-1,\"distance\":0,\"time\":0,\"locationSequence\":[0,1],\"hasSeasonalClosure\":false,\"sessionId\":\"%s\",\"locations\":[{\"latLng\":{\"lng\":-0.177413,\"lat\":51.531965},\"adminArea4\":\"\",\"adminArea5Type\":\"City\",\"adminArea4Type\":\"County\",\"adminArea5\":\"London\",\"street\":\"3 Abbey Road\",\"adminArea1\":\"GB\",\"adminArea3\":\"England\",\"type\":\"s\",\"displayLatLng\":{\"lng\":-0.177413,\"lat\":51.531963},\"linkId\":82135400,\"postalCode\":\"NW8 9AY\",\"sideOfStreet\":\"N\",\"dragPoint\":false,\"adminArea1Type\":\"Country\",\"geocodeQuality\":\"POINT\",\"geocodeQualityCode\":\"P1AAX\",\"adminArea3Type\":\"State\"},{\"latLng\":{\"lng\":-0.177413,\"lat\":51.531965},\"adminArea4\":\"\",\"adminArea5Type\":\"City\",\"adminArea4Type\":\"County\",\"adminArea5\":\"London\",\"street\":\"3 Abbey Road\",\"adminArea1\":\"GB\",\"adminArea3\":\"England\",\"type\":\"s\",\"displayLatLng\":{\"lng\":-0.177413,\"lat\":51.531963},\"linkId\":82135400,\"postalCode\":\"NW8 9AY\",\"sideOfStreet\":\"N\",\"dragPoint\":false,\"adminArea1Type\":\"Country\",\"geocodeQuality\":\"POINT\",\"geocodeQualityCode\":\"P1AAX\",\"adminArea3Type\":\"State\"}],\"hasCountryCross\":false,\"legs\":[{\"hasTollRoad\":false,\"index\":0,\"roadGradeStrategy\":[],\"hasHighway\":false,\"hasUnpaved\":false,\"distance\":0,\"time\":0,\"origIndex\":-1,\"hasSeasonalClosure\":false,\"origNarrative\":\"\",\"hasCountryCross\":false,\"formattedTime\":\"00:00:00\",\"destNarrative\":\"\",\"destIndex\":-1,\"maneuvers\":[{\"signs\":[],\"index\":0,\"maneuverNotes\":[],\"direction\":5,\"narrative\":\"\",\"iconUrl\":\"https://content.mapquest.com/mqsite/turnsigns/icon-dirs-start_sm.gif\",\"distance\":0,\"time\":0,\"linkIds\":[82135400],\"streets\":[\"B507\",\"Abbey Road\"],\"attributes\":0,\"transportMode\":\"AUTO\",\"formattedTime\":\"00:00:00\",\"directionName\":\"Southeast\",\""
+	templDump      = "{\"route\":{\"hasTollRoad\":false,\"hasBridge\":false,\"distance\":0.27,\"shape\":{\"legIndexes\":[],\"maneuverIndexes\":[],\"shapePoints\":[51.529315,-0.269962,51.529087,-0.271016,51.52901,-0.271373,51.52885,-0.272208,51.528568,-0.274354,51.528472,-0.275138,51.528324,-0.27602]},\"hasTunnel\":false,\"hasHighway\":false,\"computedWaypoints\":[],\"routeError\":{\"errorCode\":-400,\"message\":\"\"},\"formattedTime\":\"00:00:41\",\"sessionId\":\"%s\",\"realTime\":-1,\"hasSeasonalClosure\":false,\"hasCountryCross\":false,\"fuelUsed\":0.02,\"legs\":[{\"hasTollRoad\":false,\"hasBridge\":false,\"destNarrative\":\"\",\"distance\":0.27,\"hasTunnel\":false,\"hasHighway\":false,\"index\":0,\"formattedTime\":\"00:00:41\",\"origIndex\":-1,\"hasSeasonalClosure\":false,\"hasCountryCross\":false,\"roadGradeStrategy\":[],\"destIndex\":-1,\"time\":41,\"hasUnpaved\":false,\"origNarrative\":\"\",\"maneuvers\":[{\"distance\":0.27,\"streets\":[\"Coronation Road\"],\"narrative\":\"\",\"turnType\":0,\"startPoint\":{\"lng\":-0.269962,\"lat\":51.529315},\"index\":0,\"formattedTime\":\"00:00:41\",\"directionName\":\"West\",\"maneuverNotes\":[],\"linkIds\":[91225298,91225281,91222079,91222078,91222062],\"signs\":[],\""
 	testDistance   = 157
 	testLegs       = 1
-	testManeuvers  = 51
+	testManeuvers  = 52
 	testStatuscode = 0
 	testTime       = 6085
 	testUnit       = "m"
@@ -54,7 +54,7 @@ func TestDistance(t *testing.T) {
 func TestDistanceError(t *testing.T) {
 	directions := NewDirections("Amsterdam,Netherlands", []string{"sdfa"})
 	_, err := directions.Distance("k")
-	if err.Error() != "Error 400: We are unable to route with the given locations." {
+	if err.Error() != "Error 402: We are unable to route with the given locations." {
 		t.Errorf("Expected %s ~ Received %s", "", err.Error())
 	}
 }
@@ -98,7 +98,7 @@ func TestDirections(t *testing.T) {
 }
 
 func TestDump(t *testing.T) {
-	directions := NewDirections("3 Abbey Road, London, United Kingdom", []string{"3 Abbey Road, London, United Kingdom"})
+	directions := NewDirections("1 Coronation Road, London, United Kingdom", []string{"3 Coronation Road, London, United Kingdom"})
 	directions.NarrativeType = "none"
 	directions.ManMaps = false
 	results, err := directions.Get()
