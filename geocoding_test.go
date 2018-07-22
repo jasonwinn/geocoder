@@ -60,9 +60,10 @@ func TestBatchGeocode(t *testing.T) {
 func TestGeocodeShouldFail(t *testing.T) {
 	query := "Seattle WA"
 	// set a bad api key
+	savedApiKey := apiKey
 	SetAPIKey("bad api key that doesn't exist, hopefully!")
 	lat, lng, err := Geocode(query)
-	SetAPIKey(apiKey)
+	SetAPIKey(savedApiKey)
 
 	if err == nil {
 		t.Errorf("Seattle: Expected error to not be nil ~ Recieved %v", err)
@@ -75,9 +76,10 @@ func TestGeocodeShouldFail(t *testing.T) {
 
 func TestReverseGeoCodeShouldFail(t *testing.T) {
 	// set a bad api key
+	savedApiKey := apiKey
 	SetAPIKey("bad api key that doesn't exist, hopefully!")
 	address, err := ReverseGeocode(seattleLat, seattleLng)
-	SetAPIKey(apiKey)
+	SetAPIKey(savedApiKey)
 
 	if err == nil {
 		t.Errorf("Seattle (reverse): Expected error to not be nil ~ Recieved %v", err)
@@ -89,11 +91,25 @@ func TestReverseGeoCodeShouldFail(t *testing.T) {
 	}
 }
 
+func TestFullGeocode(t *testing.T) {
+	query := "Seattle WA"
+	result, err := FullGeocode(query)
+	if err != nil {
+		t.Errorf("Seattle: Expected error to be nil ~ Received %v", err)
+	}
+
+	location := result.Results[0].Locations[0]
+	if location.LatLng.Lat != seattleLat || location.LatLng.Lng != seattleLng {
+		t.Errorf("Seattle: Expected (%f, %f) ~ Received (%f, %f)", seattleLat, seattleLng, location.LatLng.Lat, location.LatLng.Lng)
+	}
+}
+
 func TestBatchGeocodeShouldFail(t *testing.T) {
 	// set a bad api key
+	savedApiKey := apiKey
 	SetAPIKey("bad api key that doesn't exist, hopefully!")
 	latLngs, err := BatchGeocode([]string{"Antwerp,Belgium", "Beijing,China"})
-	SetAPIKey(apiKey)
+	SetAPIKey(savedApiKey)
 
 	if err == nil {
 		t.Errorf("Batch: Expected error to be nil ~ Recieved %v", err)
