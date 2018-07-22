@@ -1,19 +1,22 @@
 Mapquest geocoder and directions for Go (golang)
 ================================================
 
-## What does it do
+## What it does
 
 * Returns a Longitude and Latitude for a given string query
 * Returns an address for a Longitude and Longitude
 * Returns directions between two or more points. (JSON or XML)
 
 ## API Key
-Get a free API Key at [http://mapquestapi.com](http://mapquestapi.com)
+Get a free API Key at [http://mapquestapi.com](http://mapquestapi.com).
 
 ## Why MapQuest API?
-Google Maps Geocoding API has a limitation that prohibits querying their geocoding API unless you will be displaying the results on a Google Map. Google directions is limited to 2 requests per second.
+Google Maps Geocoding API has a limitation that prohibits querying their
+geocoding API unless you will be displaying the results on a Google Map.
+Google directions is limited to 2 requests per second.
+MapQuest's geocoding API does not have these restrictions.
 
-## Install
+## Installation
 
 * go get "github.com/jasonwinn/geocoder"
 * import "github.com/jasonwinn/geocoder"
@@ -30,6 +33,10 @@ SetAPIKey("Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur")
 ```
 
 ### Geocode
+
+To retrieve just the latitude and longitude of the best match
+for a particular query, use the Geocode method:
+
 ```go
   query := "Seattle WA"
   lat, lng, err := geocoder.Geocode(query)
@@ -38,6 +45,22 @@ SetAPIKey("Fmjtd%7Cluub256alu%2C7s%3Do5-9u82ur")
   }
   
   // 47.6064, -122.330803
+ 
+```
+
+To retrieve a full geocoding result including all matches as well as
+additional location information per match like the street, city and state,
+use the FullGeocode method:
+
+
+```go
+  query := "Seattle WA"
+  result, err := geocoder.Geocode(query)
+  if err != nil {
+    panic("THERE WAS SOME ERROR!!!!!")
+  }
+  
+  // GeocodingResult instance
  
 ```
 

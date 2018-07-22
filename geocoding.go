@@ -25,7 +25,8 @@ const (
 	batchGeocodeURL   = "https://open.mapquestapi.com/geocoding/v1/batch?key="
 )
 
-// Geocode returns the latitude and longitude for a certain address
+// Returns the latitude and longitude of the best location match
+// for the specified query.
 func Geocode(address string) (float64, float64, error) {
 	// Query Provider
 	resp, err := http.Get(geocodeURL + url.QueryEscape(address) + "&key=" + apiKey)
@@ -54,8 +55,8 @@ func Geocode(address string) (float64, float64, error) {
 	return lat, lng, nil
 }
 
-// FullGeocode returns the full geocoding response including reverse-geocoded
-// location
+// Returns the full geocoding response including all of the matches
+// as well as reverse-geocoded for each match location.
 func FullGeocode(address string) (*GeocodingResult, error) {
 	// Query Provider
 	resp, err := http.Get(geocodeURL + url.QueryEscape(address) + "&key=" + apiKey)
@@ -77,7 +78,7 @@ func FullGeocode(address string) (*GeocodingResult, error) {
 	return &result, nil
 }
 
-// ReverseGeocode returns the address for a certain latitude and longitude
+// Returns the address for a latitude and longitude.
 func ReverseGeocode(lat float64, lng float64) (*Location, error) {
 	// Query Provider
 	resp, err := http.Get(reverseGeocodeURL +
@@ -107,9 +108,8 @@ func ReverseGeocode(lat float64, lng float64) (*Location, error) {
 	return &location, nil
 }
 
-// BatchGeocode allows multiple locations to be geocoded at the same time.
-// A limit of 100 locations exists for one call. Therefore the json is
-// embedded as the body of an http post.
+// Geocodes multiple locations with a single API request.
+// Up to 100 locations per call may be provided.
 func BatchGeocode(addresses []string) ([]LatLng, error) {
 	var next, start, end int
 	n := len(addresses)
