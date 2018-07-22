@@ -41,14 +41,7 @@ type Location struct {
 }
 
 type GeocodingResult struct {
-	Info struct {
-		StatusCode int `json:"statuscode"`
-		Copyright  struct {
-			Text         string `json:"text"`
-			ImageUrl     string `json:"imageUrl"`
-			ImageAltText string `json:"imageAltText"`
-		} `json:"copyright"`
-	} `json:"info"`
+	Info    Info `json:"info"`
 	Options struct {
 		MaxResults        int  `json:"maxResults"`
 		ThumbMaps         bool `json:"thumbMaps"`
