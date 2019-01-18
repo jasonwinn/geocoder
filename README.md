@@ -55,7 +55,7 @@ use the FullGeocode method:
 
 ```go
   query := "Seattle WA"
-  result, err := geocoder.Geocode(query)
+  result, err := geocoder.FullGeocode(query)
   if err != nil {
     panic("THERE WAS SOME ERROR!!!!!")
   }
