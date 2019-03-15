@@ -25,7 +25,7 @@ const (
 	batchGeocodeURL   = "https://open.mapquestapi.com/geocoding/v1/batch?key="
 )
 
-// Returns the latitude and longitude of the best location match
+// Geocode returns the latitude and longitude of the best location match
 // for the specified query.
 func Geocode(address string) (float64, float64, error) {
 	// Query Provider
@@ -55,7 +55,7 @@ func Geocode(address string) (float64, float64, error) {
 	return lat, lng, nil
 }
 
-// Returns the full geocoding response including all of the matches
+// FullGeocode returns the full geocoding response including all of the matches
 // as well as reverse-geocoded for each match location.
 func FullGeocode(address string) (*GeocodingResult, error) {
 	// Query Provider
@@ -78,7 +78,7 @@ func FullGeocode(address string) (*GeocodingResult, error) {
 	return &result, nil
 }
 
-// Returns the address for a latitude and longitude.
+// ReverseGeocode returns the address for a latitude and longitude.
 func ReverseGeocode(lat float64, lng float64) (*Location, error) {
 	// Query Provider
 	resp, err := http.Get(reverseGeocodeURL +
